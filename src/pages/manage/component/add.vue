@@ -10,6 +10,7 @@
         <!--  -->
         <el-form-item label="所属角色">
           <el-select v-model="form.roleid" placeholder="请选择上级菜单">
+            <el-option label="请选择" disabled value=""></el-option>
             <el-option
               v-for="item in rolelist"
               :key="item.id"
@@ -65,7 +66,7 @@ export default {
   data() {
     return {
       form: {
-        roleid: 1,
+        roleid: "",
         username: "",
         password: "",
         status: 1,
@@ -119,7 +120,7 @@ export default {
           // 刷新数据
           this.userreqListActions();
           // 重新拿总数
-          this.userreqtotalActions()
+          this.userreqtotalActions();
         } else {
           warningAlert(res.data.msg);
         }

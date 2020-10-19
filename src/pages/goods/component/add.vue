@@ -271,7 +271,7 @@ export default {
     add() {
       console.log(this.form);
       //将富文本编辑器的内容取出来给form.description
-        this.form.description = this.editor.txt.html();
+      this.form.description = this.editor.txt.html();
       let data = {
         ...this.form,
         specsattr: JSON.stringify(this.form.specsattr),
@@ -297,7 +297,7 @@ export default {
     //
     tolook(id) {
       console.log(id, "look");
-      reqgoodsinfo(id).then((res) => {
+      reqgoodsinfo({ id: id }).then((res) => {
         if (res.data.code == 200) {
           // successAlert(res.data.msg);
           this.form = res.data.list;
@@ -323,7 +323,7 @@ export default {
     updata() {
       // console.log(this.form);
       //将富文本编辑器的内容取出来给form.description
-        this.form.description = this.editor.txt.html();
+      this.form.description = this.editor.txt.html();
       let data = {
         ...this.form,
         specsattr: JSON.stringify(this.form.specsattr),

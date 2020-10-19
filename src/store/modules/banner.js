@@ -1,8 +1,8 @@
-import { reqmemberlist } from '../../utils/request'
+import { reqbannerlist } from '../../utils/request'
 
 
 const state = {
-    // 会员管理中的list
+    // 菜单管理中的list
     list: []
 }
 
@@ -18,7 +18,7 @@ const actions = {
     // 页面请求
     reqListActions(context){
         //发请求
-        reqmemberlist().then((res)=>{
+        reqbannerlist().then((res)=>{
             context.commit("changList",res.data.list)
         })
     }

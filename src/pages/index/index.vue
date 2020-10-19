@@ -19,8 +19,36 @@
             <i class="el-icon-menu"></i>
             <span slot="title">首页</span>
           </el-menu-item>
+          <!-- 动态侧边栏 -->
 
-          <el-submenu index="1">
+          <div v-for="item in userinfo.menus" :key="item.id">
+            <!-- 是目录 -->
+            <el-submenu :index="item.id + ''" v-if="item.children">
+              <template slot="title">
+                <i :class="item.icon"></i>
+                <span>{{ item.title }}</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item
+                  v-for="i in item.children"
+                  :key="i.id"
+                  :index="i.url"
+                  >{{ i.title }}</el-menu-item 
+                >
+              </el-menu-item-group>
+            </el-submenu>
+            <!--  -->
+
+            <!-- 菜单 -->
+            <el-menu-item v-else :index="item.url">{{
+              item.title
+            }}</el-menu-item>
+          </div>
+
+          <!-- <hr />
+          <hr />
+          <hr /> -->
+          <!-- <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>系统管理</span>
@@ -42,18 +70,24 @@
             <el-menu-item index="/member">会员管理</el-menu-item>
             <el-menu-item index="/banner">轮播图管理</el-menu-item>
             <el-menu-item index="/seckill">秒杀活动</el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
         </el-menu>
         <!-- Aside -->
       </el-aside>
       <!-- =======头部+内容======= -->
       <el-container>
-        <el-header class="header">Header </el-header>
+        <el-header class="header">
+          <div class="header-con">
+            <h3>{{ userinfo.username }}</h3>
+            <el-button type="danger" @click="logOut()">退出登录</el-button>
+          </div>
+        </el-header>
+
         <el-main>
+          <!-- 面包屑 -->
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
-
+            <el-breadcrumb-item>{{ $route.name }}</el-breadcrumb-item>
           </el-breadcrumb>
           <!-- Main -->
           <router-view class="con"></router-view>
@@ -71,16 +105,25 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters({}),
+    ...mapGetters({
+      userinfo: "userinfo",
+    }),
   },
   methods: {
-    ...mapActions({}),
+    ...mapActions({
+      changeuserinfoActions: "changeuserinfoActions",
+    }),
+
+    logOut() {
+      this.changeuserinfoActions({});
+      this.$router.push("/login");
+    },
   },
   mounted() {},
 };
 </script>
 <style scoped>
-.con{
+.con {
   padding-top: 20px;
 }
 .index {
@@ -91,5 +134,18 @@ export default {
 }
 .left {
   background-color: #20222a;
+}
+
+.header-con {
+  float: right;
+}
+.header-con h3 {
+  float: left;
+  line-height: 60px;
+  font-weight: 400;
+}
+.header-con .el-button {
+  float: left;
+  margin-top: 10px;
 }
 </style>

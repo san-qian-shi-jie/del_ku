@@ -1,3 +1,24 @@
-export const state={}
-export const mutations={}
-export const getters={}
+export const state = {
+    // 用户信息
+    userinfo: sessionStorage.getItem("userinfo") ? JSON.parse(sessionStorage.getItem("userinfo")) : {}
+}
+export const mutations = {
+    changeuserinfo(state, user) {
+        state.userinfo = user
+
+        // 存储本地    //由于状态层刷新，数据就没有了，但是我们希望数据还在，所以在本地存储中也存一份
+
+        ///如果info是一个{} ，那么代表要退出，删；如果不是一个空{},代表是登录，存
+        if (user.id) {
+            sessionStorage.setItem("userinfo", JSON.stringify(user))
+        } else {
+            sessionStorage.removeItem("userInfo")
+        }
+
+    }
+}
+export const getters = {
+    userinfo(state) {
+        return state.userinfo
+    }
+}

@@ -1,8 +1,8 @@
-import { reqmemberlist } from '../../utils/request'
+import { reqsecklist } from '../../utils/request'
 
 
 const state = {
-    // 会员管理中的list
+    // 菜单管理中的list
     list: []
 }
 
@@ -16,16 +16,17 @@ const mutations = {
 
 const actions = {
     // 页面请求
-    reqListActions(context){
+    reqListActions(context) {
         //发请求
-        reqmemberlist().then((res)=>{
-            context.commit("changList",res.data.list)
+        reqsecklist().then((res) => {
+            let list = res.data.list ? res.data.list : []
+            context.commit("changList", list)
         })
     }
 }
 
 const getters = {
-    list(state){
+    list(state) {
         return state.list
     }
 }

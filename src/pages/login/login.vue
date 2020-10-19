@@ -48,13 +48,18 @@ export default {
     ...mapGetters({}),
   },
   methods: {
-    ...mapActions({}),
+    ...mapActions({
+      changeuserinfoActions: "changeuserinfoActions",
+    }),
     login() {
       //
+      console.log(this.user, "user");
       //
       requserlogin(this.user).then((res) => {
         if (res.data.code == 200) {
-          successAlert(data.list.msg);
+          successAlert(res.data.msg);
+          // res.data.list 需要存储
+          this.changeuserinfoActions(res.data.list);
           this.$router.push("/");
         } else {
           warningAlert(res.data.msg);

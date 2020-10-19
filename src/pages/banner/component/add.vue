@@ -9,31 +9,16 @@
       <!--  <h2>增加</h2> -->
       <el-form ref="form" :model="form" label-width="80px">
         <!--  -->
-        <el-form-item label="上级分类">
-          <el-select
-            v-model="form.pid"
-            placeholder="请选择"
-            @change="changePid"
-          >
-            <el-option label="顶级分类" :value="0"></el-option>
-            <el-option
-              v-for="item in catelist"
-              :key="item.id"
-              :label="item.catename"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
 
-        <el-form-item label="分类名称">
-          <el-input v-model="form.catename"></el-input>
+        <el-form-item label="标题">
+          <el-input v-model="form.title"></el-input>
         </el-form-item>
 
         <!--  -->
         <!-- 原生 上传文件 start-->
         <!-- 如果添加成功之后，再次添加上一次的文件，就不会再出发change；如果要解决这个bug,我们就在弹框消失的时候，将input也销毁 -->
         <!-- v-if="form.pid != 0" -->
-        <el-form-item label="图片" v-if="form.pid != 0">
+        <el-form-item label="图片">
           <div class="my-upload">
             <h3>+</h3>
             <img class="img" v-if="imgUrl" :src="imgUrl" alt="" />
@@ -85,7 +70,11 @@
 import { mapGetters, mapActions } from "vuex";
 
 // axios 添加  角色获取（一条） 修改编辑
-import { reqcateadd, reqcateinfo, reqcateedit } from "../../../utils/request";
+import {
+  reqbanneradd,
+  reqbannerinfo,
+  reqbanneredit,
+} from "../../../utils/request";
 // alert
 import { successAlert, warningAlert } from "../../../utils/alert";
 
@@ -96,8 +85,8 @@ export default {
     return {
       imgUrl: "",
       form: {
-        pid: 0,
-        catename: "",
+        id: 0,
+        title: "",
         img: null,
         status: 1,
       },
@@ -110,7 +99,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      catereqListActions: "cate/reqListActions",
+      bannerreqListActions: "banner/reqListActions",
     }),
     // 消失动画完成后
     close() {
@@ -122,7 +111,7 @@ export default {
     // 添加按钮
     add() {
       console.log(this.form);
-      reqcateadd(this.form).then((res) => {
+      reqbanneradd(this.form).then((res) => {
         if (res.data.code == 200) {
           successAlert(res.data.msg);
           // 清空
@@ -130,7 +119,7 @@ export default {
           // 关闭
           this.open();
           // 刷新数据
-          this.catereqListActions();
+          this.bannerreqListActions();
         } else {
           warningAlert(res.data.msg);
         }
@@ -139,7 +128,7 @@ export default {
     //
     tolook(id) {
       console.log(id, "look");
-      reqcateinfo(id).then((res) => {
+      reqbannerinfo(id).then((res) => {
         if (res.data.code == 200) {
           // successAlert(res.data.msg);
           this.form = res.data.list;
@@ -153,13 +142,13 @@ export default {
     // 修改信息
     updata() {
       // console.log(this.form);
-      reqcateedit(this.form).then((res) => {
+      reqbanneredit(this.form).then((res) => {
         // 清空
         this.empty();
         // 关闭
         this.open();
         // 刷新数据
-        this.catereqListActions();
+        this.bannerreqListActions();
       });
     },
     // 取消按钮
@@ -198,10 +187,7 @@ export default {
 
   // *********************
 
-  mounted() {
-    //   商品分类的数据
-    //   this.catereqListActions()
-  },
+  mounted() {},
 };
 </script>
 <style  scoped>

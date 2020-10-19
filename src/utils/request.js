@@ -3,6 +3,10 @@ import qs from "qs"
 
 import Vue from "vue"
 
+
+import store from "../store"
+
+
 //开发环境下使用
 Vue.prototype.$imgurl = "http://localhost:3000"
 let baseUrl = "/api";
@@ -10,6 +14,21 @@ let baseUrl = "/api";
 // 打包
 // Vue.prototype.$imgPre=""
 // let baseUrl = "";
+
+// 请求拦截  //请求拦截  后台 app.js 后端登录拦截打开
+axios.interceptors.request.use(req => {
+
+    // console.log(req,"req");
+    if (req.url != baseUrl + "/api/userlogin") {
+        req.headers.authorization = store.state.userinfo.token;
+    }
+    return req
+})
+
+
+
+
+
 
 //响应拦截
 axios.interceptors.response.use((res) => {
@@ -337,13 +356,11 @@ export const reqgoodslist = (params) => {
 }
 
 // 商品获取（一条）
-export const reqgoodsinfo = (id) => {
+export const reqgoodsinfo = (params) => {
     return axios({
         url: baseUrl + "/api/goodsinfo",
         method: "get",
-        params: {
-            id: id
-        }
+        params: params
     })
 }
 // 商品修改
@@ -402,11 +419,116 @@ export const reqmemberedit = (params) => {
 }
 
 
+// *************轮播图管理*****************
+
+// **1.轮播图添加** 
+export const reqbanneradd = (params) => {
+    let data = new FormData()
+    /*data.append("pid", 1)
+    data.append("cataanme", "123")
+    data.append("img", File)
+    data.append("status", 1)*/
+    for (let i in params) {
+        data.append(i, params[i])
+    }
+    return axios({
+        url: baseUrl + "/api/banneradd",
+        method: "post",
+        data: data
+    })
+}
+
+// **2.轮播图列表** **   
+export const reqbannerlist = () => {
+    return axios({
+        url: baseUrl + "/api/bannerlist",
+        method: "get",
+    })
+}
+// 3.轮播图获取（一条）
+export const reqbannerinfo = (id) => {
+    return axios({
+        url: baseUrl + "/api/bannerinfo",
+        method: "get",
+        params: {
+            id: id
+        }
+    })
+}
+// 4.轮播图修改
+export const reqbanneredit = (params) => {
+    let data = new FormData()
+    for (let i in params) {
+        data.append(i, params[i])
+    }
+    return axios({
+        url: baseUrl + "/api/banneredit",
+        method: "post",
+        data: data
+    })
+}
+// 5.轮播图删除
+export const reqbannerdelete = (id) => {
+    return axios({
+        url: baseUrl + "/api/bannerdelete",
+        method: "post",
+        data: qs.stringify({ id: id })
+    })
+}
 
 
 
 
+// *************秒杀管理*****************
 
+// 限时秒杀添加 
+export const reqseckadd = (data) => {
+
+    return axios({
+        url: baseUrl + "/api/seckadd",
+        method: "post",
+        data: qs.stringify(data)
+    })
+}
+
+// 限时秒杀列表 
+export const reqsecklist = () => {
+    return axios({
+        url: baseUrl + "/api/secklist",
+        method: "get",
+    })
+}
+
+
+// 限时秒杀获取（一条）
+export const reqseckinfo = (id) => {
+    return axios({
+        url: baseUrl + "/api/seckinfo",
+        method: "get",
+        params: {
+            id: id
+        }
+    })
+}
+
+// 限时秒杀修改
+export const reqseckedit = (data) => {
+    return axios({
+        url: baseUrl + "/api/seckedit",
+        method: "post",
+        data: qs.stringify(data)
+    })
+}
+
+// 限时秒杀删除
+
+export const reqseckdelete = (id) => {
+    return axios({
+        url: baseUrl + "/api/seckdelete",
+        method: "post",
+        data: qs.stringify({ id: id })
+    })
+}
 
 
 

@@ -1,68 +1,21 @@
-＃doem1
-**菜单管理**
+# doem
 
-增加 ok
+> A Vue.js project
 
-删除 ok
+## Build Setup
 
-查询 ok
+``` bash
+# install dependencies
+npm install
 
-修改 ok
+# serve with hot reload at localhost:8080
+npm run dev
 
-**角色管理**
+# build for production with minification
+npm run build
 
-增加 ok
+# build for production and view the bundle analyzer report
+npm run build --report
+```
 
-删除 ok
-
-查询 ok
-
-修改 ok
-
-**管理员管理**
-
-增加 ok
-
-删除 ok
-
-查询 ok
-
-修改 ok
-
-**商品分类**
-
-增加 ok
-
-删除 ok
-
-查询 ok
-
-修改 ok
-
-**商品规格**
-
-增加 ok
-
-删除 ok
-
-查询 ok
-
-修改 ok
-
-**商品管理**
-
-增加 ok
-
-删除 ok
-
-查询 ok
-
-修改 ok
-
-**会员管理**
-
-删除 ok
-
-查询 ok
-
-修改 ok
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
